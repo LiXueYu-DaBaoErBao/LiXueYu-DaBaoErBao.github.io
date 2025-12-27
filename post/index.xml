@@ -2,46 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Posts on LiXueYu-DaBaoErBao Site</title>
-    <link>http://localhost:1313/post/</link>
+    <link>https://example.org/post/</link>
     <description>Recent content in Posts on LiXueYu-DaBaoErBao Site</description>
     <generator>Hugo -- 0.152.2</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Dec 2025 20:38:39 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>AI概述</title>
-      <link>http://localhost:1313/post/0001/</link>
-      <pubDate>Sat, 27 Dec 2025 20:38:39 +0800</pubDate>
-      <guid>http://localhost:1313/post/0001/</guid>
-      <description>&lt;p&gt;AI并非用来解决一切问题。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;一、AI的本质。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;AI的本质其实是语言概率模型，是一种暴力美学。现在流行的大模型动辄几十亿、几百亿个参数。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;二、AI和传统软件软件方法的对比。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;并非所有的场景都适合用AI，传统软件在边界确定的场景下，  会有非常稳定的表现，而对于开放场景无法适应。例如：协议类问题是在人假设的范围内进行问题解决， 传统软件方法优于AI算法。感知类问题，  一般与复杂的外部因素相关， 需要感知自然界的规律等， 则AI算法能力远超传统算法。&lt;/p&gt;
-&lt;p&gt;**传统软件方法适用的场景特点：**规则描述容易，规则确定；安全性、可靠性要求极高。例如：财务系统、路由算法。&lt;/p&gt;
-&lt;p&gt;**AI算法适用的场景特点：**规则描述困难、数据容易获取（例如：车灯感知图像信息，光纤传感信号）；搜索空间巨大（AlphaGo、游戏）；可靠性要求较低。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;三、学习AI需要先学习哪些工具书。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;AI需要基本的数学基础，但是并非高深不可理解，基本上主要用到本科阶段的数学知识，而更多的是利用这些数学知识进行建模，工程上的应用。需要提前了解概率论、线性代数、微积分、决策论、信息论等相关基础。也可以一边学习工具一边学习AI，就是放慢一点脚步。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;四、算力包含哪些要素？&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;算力包含：运算能力、内存带宽消耗、IO开销。评估算力的时候往往从这些角度进行评估。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;五、机器学习、神经网络、深度学习之间的关系。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;深度学习是当今机器学习领域最强大、最活跃的分支，而神经网络是实现它的核心技术架构。&lt;/strong&gt; 正是由于深度学习的兴起，人工智能在最近十年迎来了爆炸式的发展。&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;</description>
-    </item>
-    <item>
-      <title>251213blog</title>
-      <link>http://localhost:1313/post/test/</link>
-      <pubDate>Sat, 13 Dec 2025 21:04:18 +0800</pubDate>
-      <guid>http://localhost:1313/post/test/</guid>
-      <description>&lt;p&gt;写博客拉，哈哈&lt;/p&gt;
-&lt;p&gt;33333333333333333333333333333333333333333333&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>First Post</title>
-      <link>http://localhost:1313/post/first-post/</link>
-      <pubDate>Tue, 25 Nov 2025 15:50:39 +0800</pubDate>
-      <guid>http://localhost:1313/post/first-post/</guid>
-      <description>&lt;p&gt;99999999999999&lt;/p&gt;</description>
-    </item>
+    <lastBuildDate></lastBuildDate>
+    <atom:link href="https://example.org/post/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
