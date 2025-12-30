@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Posts on LiXueYu-DaBaoErBao Site</title>
+    <link>http://localhost:1313/post/</link>
+    <description>Recent content in Posts on LiXueYu-DaBaoErBao Site</description>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 29 Dec 2025 19:30:07 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>多项式曲线拟合</title>
+      <link>http://localhost:1313/post/0002/</link>
+      <pubDate>Mon, 29 Dec 2025 19:30:07 +0800</pubDate>
+      <guid>http://localhost:1313/post/0002/</guid>
+      <description>&lt;p&gt;我们首先介绍一个简单的回归问题，本章将以此作为贯穿始终的示例，以激发对一系列关键概念的理解。假设我们观察到一个实数值输入变量x，并希望利用这一观察结果来预测一个实数值目标变量t的值。就目前而言，考虑一个使用合成生成数据的人工示例是有益的，因为这样我们就能知道生成数据的确切过程，以便与任何学习到的模型进行比较。本例中的数据由函数sin(2πx)生成，目标值中包含随机噪声，详见附录A。&lt;/p&gt;
+&lt;p&gt;现在假设我们得到一个训练集，其中包含N个x观测值，记为&lt;strong&gt;x&lt;/strong&gt; ≡ (x1,&amp;hellip;,xN)T，以及对应的t观测值，记为&lt;strong&gt;t&lt;/strong&gt; ≡ (t1,&amp;hellip;,tN)T。图1.2展示了一个包含N=10个数据点的训练集的绘图。图1.2中的输入数据集&lt;strong&gt;x&lt;/strong&gt;是通过选择xn的值生成的，其中n=1,&amp;hellip;,N，这些值在[0,1]范围内均匀分布，而目标数据集&lt;strong&gt;t&lt;/strong&gt;是通过首先计算函数sin(2πx)的对应值，然后向每个这样的点添加具有&lt;strong&gt;高斯分布&lt;/strong&gt;（高斯分布在1.2.4节中讨论）的较少随机噪声来获得的，以得到对应的值tn。通过这种方式生成数据，我们捕捉到了许多真实数据集的一个特性，即它们具有我们希望学习的潜在规律性，但单个观测值会被随机噪声破坏。这种噪声可能源于本质上的随机（即随机）过程，如放射性衰变，但更常见的原因是存在本身未被观察到的变异源。&lt;/p&gt;
+&lt;p&gt;我们的目标是利用这个训练集，对输入变量的一些新值x^的目标变量值t^进行预测。正如我们稍后将看到的，这隐含着试图发现底层函数sin(2πx)。这本质上是一个难题，因为我们必须从有限的数据集中进行归纳。此外，观测到的数据中存在噪声，因此对于给定的x^，t^的适当值存在不确定性。第1.2节讨论的概率论提供了一个框架，用于以&lt;strong&gt;精确和定量&lt;/strong&gt;的方式表达这种不确定性，而第1.5节讨论的&lt;strong&gt;决策论&lt;/strong&gt;则使我们能够利用这种概率表示，从而根据适当的标准做出最优预测。&lt;/p&gt;
+&lt;p&gt;然而，就目前而言，我们将以较为非正式的方式进行，并考虑一种基于曲线拟合的简单方法。具体而言，我们将使用多项式函数来拟合数据，该函数的形式为，其中M为多项式的阶数，xj表示x的j次幂。多项式系数w0,&amp;hellip;,wM统称为向量w。请注意，虽然多项式函数y(x,&lt;strong&gt;w&lt;/strong&gt;)是x的非线性函数，&lt;strong&gt;但它却是系数w的线性函数&lt;/strong&gt;。像多项式这样在未知参数中呈线性的函数具有重要特性，被称为线性模型，将在第3章和第4章中详细讨论。
+$$
+y(x,\pmb{w})=w_0+w_1x+w_2x^2+&amp;hellip;+w_Mx^M=\sum_{j=0}^Mw_jx^j                                                   \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad(1.1)
+$$&lt;/p&gt;
+&lt;p&gt;系数的值将通过将多项式拟合到训练数据来确定。这可以通过&lt;strong&gt;最小化误差函数&lt;/strong&gt;来实现，该函数用于衡量对于任何给定的w值，函数y(x,w)与训练集数据点之间的不拟合程度。一个简单且广泛使用的误差函数选择是，每个数据点xn的预测值y(xn,w)与对应目标值tn之间的误差平方和，因此我们最小化的是这个平方和，其中包含1/2的系数，以便后续方便。我们将在本章稍后讨论选择这种误差函数的动机。目前我们只需注意，这是一个&lt;strong&gt;非负量&lt;/strong&gt;，当且仅当函数y(x,w)恰好通过每个训练数据点时，该值为零。平方和误差函数的几何解释如图1.3所示。
+$$
+E(\pmb{w})=\frac {1} {2}\sum_{n=1}^N{{y(x_n,\pmb{w})-t_n}}^2\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad(1.2)
+$$&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;http://localhost:1313/imgs/clip_image006.jpg&#34;&gt;&lt;/p&gt;
+&lt;p&gt;图1.3 误差函数（1.2）对应于每个数据点与函数y(x,w)的位移（由垂直绿色条表示）平方和的一半。&lt;/p&gt;
+&lt;p&gt;我们可以通过选择使E(w)尽可能小的w值来解决曲线拟合问题。由于误差函数是系数w的二次函数，因此其关于系数的导数在w的元素中是线性的，因此误差函数的最小化有一个唯一的解，记为w，该解可以以封闭形式找到。由此得到的多项式由函数y(x,w)给出。&lt;/p&gt;
+&lt;p&gt;接下来还有一个问题，即&lt;strong&gt;如何选择多项式的阶数****M&lt;/strong&gt;。正如我们将要看到的，这其实是一个重要概念——模型比较或模型选择的实例。在图1.4中，我们展示了将阶数M分别为0、1、3和9的多项式拟合到图1.2所示数据集的结果的四个示例。&lt;/p&gt;
+&lt;p&gt;我们注意到，常数（M=0）和一阶（M=1）多项式对数据的拟合相当差，因此对函数sin(2πx)的表示也相当差。在图1.4所示的示例中，三阶（M=3）多项式似乎对函数sin(2πx)的拟合最好。当我们使用更高阶的多项式（M=9）时，对训练数据的拟合非常出色。事实上，多项式恰好通过每个数据点，且E(w)=0。然而，拟合曲线剧烈振荡，对函数sin(2πx)的表示非常差。后一种行为被称为&lt;strong&gt;过拟合&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;如前所述，我们的目标是通过为新数据做出准确预测来实现良好的&lt;strong&gt;泛化能力&lt;/strong&gt;。为了&lt;strong&gt;定量了解泛化性能对****M的依赖性&lt;/strong&gt;，我们可以考虑一个单独的测试集，该测试集包含100个数据点，这些数据点是通过与生成训练集点完全相同的程序生成的，但目标值中的随机噪声值选择了新的值。对于每个M值，我们可以评估训练数据中由式（1.2）给出的E(w*)的残差值，同时也可以评估测试数据集中的E(w)。有时，使用&lt;strong&gt;均方根（RMS）误差&lt;/strong&gt;
+$$
+E_{RMS}=\sqrt {2E(\pmb{w}^&lt;em&gt;)/N}\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad(1.3)
+$$
+更为方便，该误差由定义，其中除以N允许我们在同等基础上比较不同大小的数据集，而平方根确保ERMS的测量尺度（和单位)与目标变量t相同。图1.5显示了**不同&lt;/em&gt;***M值下训练集和测试集的RMS误差图**。测试集误差是衡量我们在预测新数据观测值t时的表现好坏的一种指标。从图1.5中可以看出，M值较小会带来相对较大的测试集误差，这可以归因于相应的多项式相当不灵活，无法捕捉到函数sin(2πx)中的振荡。在M=3的情况下，M在3⩽M⩽8范围内的值会带来较小的测试集误差，并且这些值也给出了sin(2πx)生成函数的合理表示，如图1.4所示。&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;img&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/imgs/clip_image010.jpg&#34;&gt;&lt;/p&gt;
+&lt;p&gt;图1.4 展示了不同阶数M的多项式曲线图，以红色曲线表示，这些多项式是拟合到图1.2中所示的数据集的。&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;img&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/imgs/clip_image012.jpg&#34;&gt;&lt;/p&gt;
+&lt;p&gt;图1.5 展示了均方根误差的图形，该误差由式（1.3）定义，并在训练集和独立测试集上针对不同的M值进行了评估&lt;/p&gt;
+&lt;p&gt;对于M=9的情况，训练集误差趋近于零，这是我们所预料的，因为这个多项式包含10个自由度，对应于10个系数w0,&amp;hellip;,w9，因此可以精确地调整以适应训练集中的10个数据点。然而，测试集误差变得非常大，并且如图1.4所示，相应的函数y(x,w*)表现出剧烈的振荡。&lt;/p&gt;
+&lt;p&gt;这听起来似乎有些矛盾，因为给定阶数的多项式包含所有低阶多项式作为特例。因此，M=9的多项式至少能够产生与M=3的多项式一样好的结果。此外，我们可能会认为，新数据的最佳预测器应该是生成数据的函数sin(2πx)（稍后我们将看到，事实确实如此）。我们知道，函数sin(2πx)的幂级数展开式包含所有阶数的项，因此我们可能会预期，随着M的增加，结果应单调改善。&lt;/p&gt;
+&lt;p&gt;通过检查从不同阶多项式中获得的系数w的值，我们可以对这个问题有所了解，如表1.1所示。我们观察到，随着M的增加，系数的数值通常会变大。特别是对于M=9的多项式，系数通过产生较大的正值和负值而被精细调整到数据上，使得相应的多项式函数能够精确匹配每个数据点，但在数据点之间（特别是在范围的两端附近），函数表现出图1.4中观察到的大幅振荡。直观上，发生的情况是，具有较大M值的更灵活的多项式越来越适应目标值上的随机噪声。&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;img&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/imgs%5Cclip_image014.jpg&#34;&gt;&lt;/p&gt;
+&lt;p&gt;表1.1 不同阶多项式的系数w表。观察一下，随着多项式阶数的增加，系数的典型值是如何急剧增加的。&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;img&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/imgs%5Cclip_image016.jpg&#34;&gt;&lt;/p&gt;
+&lt;p&gt;图1.6 展示了使用M=9的多项式对N=15个数据点（左图）和N=100个数据点（右图）的最小二乘误差函数进行最小化后得到的解的图形。我们可以看到，&lt;strong&gt;增加数据集的大小可以减轻过拟合问题&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;研究给定模型在数据集大小变化时的行为也很有趣，如图1.6所示。我们观察到，在给定的模型复杂度下，随着数据集大小的增加，过拟合问题变得不那么严重。另一种说法是，数据集越大，我们能够拟合数据的模型就越复杂（换言之，越灵活）。有时人们会提出一个粗略的启发式原则，即&lt;strong&gt;数据点的数量应不少于模型中自适应参数数量的某个倍数（比如&lt;strong&gt;&lt;strong&gt;5&lt;/strong&gt;&lt;/strong&gt;或10****倍）&lt;/strong&gt;。然而，正如我们将在第3章中看到的，参数数量并不一定是衡量模型复杂度的最合适指标。&lt;/p&gt;
+&lt;p&gt;此外，根据可用训练集的大小来限制模型中的参数数量，这一点让人相当不满意。根据所解决问题复杂度来选择模型的复杂度，似乎更为合理。我们将看到，&lt;strong&gt;最小二乘法&lt;/strong&gt;寻找模型参数是&lt;strong&gt;最大似然法&lt;/strong&gt;（第1.2.5节讨论）的一个特例，而过拟合问题可以被理解为最大似然法的一个普遍特性。通过采用&lt;strong&gt;贝叶斯方法，可以避免过拟合问题&lt;/strong&gt;。我们将看到，从&lt;strong&gt;贝叶斯的角度来看，使用参数数量远超过数据点数量的模型并无困难&lt;/strong&gt;。事实上，在贝叶斯模型中，有效参数数量会自动适应数据集的大小。&lt;/p&gt;
+&lt;p&gt;然而，就目前而言，继续采用当前的方法并思考如何在实践中将其应用于规模有限的数据集（在这些数据集中，我们可能希望使用相对复杂且灵活的模型）是颇具启发性的。在这种情况下，一种常用来&lt;strong&gt;控制过拟合现象的技术是正则化&lt;/strong&gt;，它涉及在误差函数（1.2）中&lt;strong&gt;添加一个惩罚项，以阻止系数达到较大值&lt;/strong&gt;。最简单的此类惩罚项采用所有系数平方和的形式，从而得到一个修改后的误差函数，&lt;img alt=&#34;img&#34; loading=&#34;lazy&#34; src=&#34;file:///C:/Users/L00883~1/AppData/Local/Temp/msohtmlclip1/01/clip_image018.jpg&#34;&gt;其中||&lt;strong&gt;w&lt;/strong&gt;||2 ≡&lt;strong&gt;w&lt;/strong&gt;T&lt;strong&gt;w&lt;/strong&gt;=w02 +w12 +&amp;hellip;+w M 2，&lt;strong&gt;系数λ控制着正则化项与平方和误差项之间的相对重要性&lt;/strong&gt;。注意，正则化项中通常省略系数w0，因为包含它会使得结果依赖于目标变量的原点选择（Hastie等，2001），或者也可以包含w0，但为其设置单独的正则化系数（我们将在第5.5.1节中更详细地讨论这个话题）。同样地，式（1.4）中的&lt;strong&gt;误差函数可以以封闭形式精确最小化&lt;/strong&gt;。这类技术在&lt;strong&gt;统计学文献中被称为收缩方法&lt;/strong&gt;，因为它们会减小系数的值。&lt;strong&gt;二次正则化器的特殊情况被称为岭回归&lt;/strong&gt;（Hoerl和Kennard，1970）。在神经网络的背景下，这种方法被称为&lt;strong&gt;权重衰减&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;img&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/imgs/clip_image020.jpg&#34;&gt;&lt;/p&gt;
+&lt;p&gt;图1.7 使用&lt;strong&gt;正则化误差函数&lt;/strong&gt;（1.4）对图1.2所示数据集拟合的M=9多项式图，其中正则化参数λ取两个值，对应于lnλ = −18和lnλ = 0。无正则化项（即λ = 0，对应于lnλ = −∞）的情况显示在图1.4的右下角。&lt;/p&gt;
+&lt;p&gt;图1.7展示了将M=9阶多项式拟合到与之前相同的数据集的结果，但这次使用的是由式（1.4）给出的正则化误差函数。我们观察到，&lt;strong&gt;当&lt;strong&gt;&lt;strong&gt;ln&lt;/strong&gt;&lt;/strong&gt;λ的值为-18****时，过拟合现象得到了抑制&lt;/strong&gt;，我们现在得到了一个更接近底层函数sin(2πx)的表示。然而，如果我们对λ使用了过大的值，那么我们又会得到一个较差的拟合，如图1.7中lnλ=0的情况所示。拟合多项式的相应系数列于表1.2中，表明正则化具有降低系数大小的预期效果。&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;img&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/imgs%5Cclip_image022.jpg&#34;&gt;&lt;/p&gt;
+&lt;p&gt;表1.2 展示了正则化参数λ取不同值时，M=9次多项式的系数w。请注意，lnλ=−∞对应于无正则化的模型，即图1.4中右下角的图形。我们可以看到，随着λ值的增加，系数的典型大小会变小。&lt;/p&gt;
+&lt;p&gt;通过绘制训练集和测试集的均方根误差（1.3）值与lnλ的关系图，可以观察到正则化项对泛化误差的影响，如图1.8所示。我们可以看到，λ现在控制着模型的有效复杂度，从而决定了过拟合的程度。&lt;/p&gt;
+&lt;p&gt;模型复杂度的问题是一个重要问题，我们将在第1.3节中详细讨论。在此，我们仅需指出，如果我们试图使用这种最小化误差函数的方法来解决实际应用问题，那么我们必须找到一种方法来确定模型复杂度的合适值。上述结果提出了一种实现这一目标的简单方法，即利用现有数据并将其划&lt;strong&gt;分为训练集（用于确定系数&lt;strong&gt;&lt;strong&gt;w&lt;/strong&gt;&lt;/strong&gt;）和单独的验证集（也称为留出集）&lt;/strong&gt;，用于优化模型复杂度（M或λ）。然而，在许多情况下，这将证明是对宝贵训练数据的过度浪费，因此我们必须寻求更复杂的方法。第1.3节 迄今为止，我们对多项式曲线拟合的讨论主要依赖于直觉。现在，我们转向讨论概率论，以寻求一种更有原则的方法来解决模式识别中的问题。概率论不仅为本书中几乎所有的后续发展提供了基础，还将使我们更深入地理解在多项式曲线拟合背景下引入的概念，并允许我们将这些概念扩展到更复杂的情况。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>AI概述</title>
+      <link>http://localhost:1313/post/0001/</link>
+      <pubDate>Sat, 27 Dec 2025 20:38:39 +0800</pubDate>
+      <guid>http://localhost:1313/post/0001/</guid>
+      <description>&lt;p&gt;AI并非用来解决一切问题。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一、AI的本质。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;AI的本质其实是语言概率模型，是一种暴力美学。现在流行的大模型动辄几十亿、几百亿个参数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二、AI和传统软件软件方法的对比。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;并非所有的场景都适合用AI，传统软件在边界确定的场景下，  会有非常稳定的表现，而对于开放场景无法适应。例如：协议类问题是在人假设的范围内进行问题解决， 传统软件方法优于AI算法。感知类问题，  一般与复杂的外部因素相关， 需要感知自然界的规律等， 则AI算法能力远超传统算法。&lt;/p&gt;
+&lt;p&gt;传统软件方法适用的场景特点：规则描述容易，规则确定；安全性、可靠性要求极高。例如：财务系统、路由算法。&lt;/p&gt;
+&lt;p&gt;AI算法适用的场景特点：规则描述困难、数据容易获取（例如：车灯感知图像信息，光纤传感信号）；搜索空间巨大（AlphaGo、游戏）；可靠性要求较低。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;三、学习AI需要先学习哪些工具书。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;AI需要基本的数学基础，但是并非高深不可理解，基本上主要用到本科阶段的数学知识，而更多的是利用这些数学知识进行建模，工程上的应用。需要提前了解概率论、线性代数、微积分、决策论、信息论等相关基础。也可以一边学习工具一边学习AI，就是放慢一点脚步。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;四、算力包含哪些要素？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;算力包含：运算能力、内存带宽消耗、IO开销。评估算力的时候往往从这些角度进行评估。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;五、机器学习、神经网络、深度学习之间的关系。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;深度学习是当今机器学习领域最强大、最活跃的分支，而神经网络是实现它的核心技术架构。&lt;/strong&gt; 正是由于深度学习的兴起，人工智能在最近十年迎来了爆炸式的发展。&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;http://localhost:1313/imgs/bc2fb7ece606d8.png&#34;&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
